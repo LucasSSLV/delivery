@@ -11,7 +11,7 @@ export const mongo = {
       this.client = client;
       this.db = db;
     } catch (error) {
-      return { text: "error", error };
+        return {text: "error", error};
     }
   },
 };
