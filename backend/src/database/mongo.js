@@ -1,5 +1,5 @@
+import { text } from "express";
 import { MongoClient } from "mongodb";
-import { connect } from "venom-bot";
 //fazendo a conexão com o banco de dados
 export const mongo = {
   async connect({ mongoConnectionString, mongoDbName }) {
@@ -11,7 +11,7 @@ export const mongo = {
       this.client = client;
       this.db = db;
     } catch (error) {
-      console.log("Error connecting to MongoDB: ", error);
+      return { text: "error", error };
     }
   },
 };
