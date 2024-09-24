@@ -1,4 +1,4 @@
-import express from "express";
+import express, { text } from "express";
 import passport from "passport";
 import LocalStrategy from "passport-local";
 import crypto from "crypto";
@@ -22,7 +22,7 @@ passport.use(
         return callback(null, false);
       }
 
-      const saltBuffer = user.salt;
+      const saltBuffer = user.salt.buffer;
 
       crypto.pbkdf2(
         password,
@@ -127,4 +127,38 @@ authRouter.post("/signup", async (req, res) => {
   }
 });
 
+//atenticação de user
+authRouter.post("/login", (req, res) => {
+  passport.authenticate("local", (error, user) => {
+    if (error) {
+      return res.send({
+        success: false,
+        statusCode: 500,
+        body: {
+          text: "Error during authentication!",
+          error,
+        },
+      });
+    }
+    if (!user) {
+      return res.send({
+        success: false,
+        statusCode: 400,
+        body: {
+          text: "User not found!",
+        },
+      });
+    }
+    const token = jwt.sign(user, "secret");
+    return res.send({
+      success: true,
+      statusCode: 200,
+      body: {
+        text: "User logged correctly!",
+        user,
+        token,
+      },
+    });
+  })(req, res);
+});
 export default authRouter;
