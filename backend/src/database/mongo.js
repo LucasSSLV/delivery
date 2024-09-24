@@ -1,4 +1,3 @@
-import { text } from "express";
 import { MongoClient } from "mongodb";
 //fazendo a conexão com o banco de dados
 export const mongo = {
@@ -10,8 +9,10 @@ export const mongo = {
 
       this.client = client;
       this.db = db;
+
+      return "Connected to mongoDB";
     } catch (error) {
-        return {text: "error", error};
+      return { text: "error", error };
     }
   },
 };

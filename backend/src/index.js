@@ -3,6 +3,7 @@ import cors from "cors";
 import { mongo } from "./database/mongo.js";
 //forma certa de importar o dotenv
 import pkg from "dotenv";
+import authRouter from "./auth/auth.js";
 //forma certa de desestruturar o config de dentro do dotenv
 const { config } = pkg;
 
@@ -20,8 +21,8 @@ const main = async () => {
 
   console.log(mongoConnection);
 
-  app.use(cors());
   app.use(express.json());
+  app.use(cors());
 
   app.get("/", (req, res) => {
     res.send({
@@ -31,6 +32,7 @@ const main = async () => {
     });
   });
 
+  app.use("/auth", authRouter);
   app.listen(port, hostname, () => {
     console.log(`Server is running at http://${hostname}:${port}`);
   });
