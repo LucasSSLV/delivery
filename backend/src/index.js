@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { mongo } from "./database/mongo.js";
+import usersRouter from "./routes/users.js";
 //forma certa de importar o dotenv
 import pkg from "dotenv";
 import authRouter from "./auth/auth.js";
@@ -33,6 +34,8 @@ const main = async () => {
   });
 
   app.use("/auth", authRouter);
+  app.use("/users", usersRouter);
+
   app.listen(port, hostname, () => {
     console.log(`Server is running at http://${hostname}:${port}`);
   });

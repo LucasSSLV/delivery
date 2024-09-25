@@ -1,5 +1,5 @@
-import UsersDataAccess from "../dataAccess/users";
-import { ok, serverError } from "../helpers/httpResponse";
+import UsersDataAccess from "../dataAccess/users.js";
+import { notFound, ok, serverError } from "../helpers/httpResponse.js";
 
 export default class UsersController {
   constructor() {

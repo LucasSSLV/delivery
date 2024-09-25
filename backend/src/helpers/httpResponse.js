@@ -21,3 +21,9 @@ export const serverError = (error) => {
     body: error,
   };
 };
+
+export default {
+  ok,
+  notFound,
+  serverError,
+};
