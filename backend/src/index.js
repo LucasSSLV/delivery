@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { mongo } from "./database/mongo.js";
+import authRouter from "./auth/auth.js";
 import usersRouter from "./routes/users.js";
 //forma certa de importar o dotenv
 import pkg from "dotenv";
-import authRouter from "./auth/auth.js";
 //forma certa de desestruturar o config de dentro do dotenv
 const { config } = pkg;
 
@@ -32,9 +32,14 @@ const main = async () => {
       body: "welcome to delivery app",
     });
   });
-
+  //rota de autenticação
   app.use("/auth", authRouter);
+  //rota de usuarios
   app.use("/users", usersRouter);
+  //rota de usuários por id
+  // app.use("/users/:id", usersRouter);
+  //rota deleta por id
+  // app.use("/delete", authRouter);
 
   app.listen(port, hostname, () => {
     console.log(`Server is running at http://${hostname}:${port}`);
