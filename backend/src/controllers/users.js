@@ -1,5 +1,10 @@
 import UsersDataAccess from "../dataAccess/users.js";
-import { notFound, ok, serverError } from "../helpers/httpResponse.js";
+import {
+  notFound,
+  ok,
+  serverError,
+  userNotExist,
+} from "../helpers/httpResponse.js";
 
 export default class UsersController {
   constructor() {
@@ -31,6 +36,10 @@ export default class UsersController {
   //deleta usuário por id
   async deleteUserById(userId) {
     try {
+      const userExist = await this.dataAccess.getUserById(userId);
+      if (!userExist) {
+        return userNotExist();
+      }
       const result = await this.dataAccess.deleteUserById(userId);
 
       return ok(result);

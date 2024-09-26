@@ -6,6 +6,14 @@ export const ok = (body) => {
   };
 };
 
+export const userNotExist = () => {
+  return {
+    success: false,
+    statusCode: 400,
+    body: "user already deleted or does not exist",
+  };
+};
+
 export const notFound = () => {
   return {
     success: false,
@@ -26,4 +34,5 @@ export default {
   ok,
   notFound,
   serverError,
+  userNotExist,
 };
