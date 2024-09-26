@@ -16,17 +16,17 @@ export default class UsersController {
   }
 
   //trás usuário por id
-  // async getUserById(id) {
-  //   try {
-  //     const userById = await this.dataAccess.getUserById(id);
-  //     if (userById) {
-  //       return ok(userById);
-  //     }
-  //     return notFound();
-  //   } catch (error) {
-  //     return serverError(error);
-  //   }
-  // }
+  async getUserById(id) {
+    try {
+      const userById = await this.dataAccess.getUserById(id);
+      if (userById) {
+        return ok(userById);
+      }
+      return notFound();
+    } catch (error) {
+      return serverError(error);
+    }
+  }
 
   //deleta usuário por id
   async deleteUserById(userId) {

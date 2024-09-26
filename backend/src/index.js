@@ -36,10 +36,6 @@ const main = async () => {
   app.use("/auth", authRouter);
   //rota de usuarios
   app.use("/users", usersRouter);
-  //rota de usuários por id
-  // app.use("/users/:id", usersRouter);
-  //rota deleta por id
-  // app.use("/delete", authRouter);
 
   app.listen(port, hostname, () => {
     console.log(`Server is running at http://${hostname}:${port}`);

@@ -12,13 +12,13 @@ usersRouter.get("/", async (req, res) => {
 });
 
 //rota que trás um usuário por id
-// usersRouter.get("/:id", async (req, res) => {
-//   const { success, statusCode, body } = await userscontrollers.getUserById(
-//     req.params.id
-//   );
+usersRouter.get("/:id", async (req, res) => {
+  const { success, statusCode, body } = await userscontrollers.getUserById(
+    req.params.id
+  );
 
-//   res.status(statusCode).json({ success, statusCode, body });
-// });
+  res.status(statusCode).json({ success, statusCode, body });
+});
 
 //rota que deleta por id
 usersRouter.delete("/:id", async (req, res) => {

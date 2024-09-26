@@ -13,13 +13,13 @@ export default class UsersDataAccess {
   }
 
   //trás usuário por id
-  // async getUserById(id) {
-  //   const result = await mongo.db
-  //     .collection(collectionName)
-  //     .findOne({ _id: new ObjectId(id) });
+  async getUserById(id) {
+    const result = await mongo.db
+      .collection(collectionName)
+      .findOne({ _id: new ObjectId(id) });
 
-  //   return result;
-  // }
+    return result;
+  }
 
   //rota que deleta um usuário
   async deleteUserById(userId) {
