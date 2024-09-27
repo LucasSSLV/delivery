@@ -29,4 +29,13 @@ usersRouter.delete("/:id", async (req, res) => {
   res.status(statusCode).json({ success, statusCode, body });
 });
 
+//rota que atualiza por id
+usersRouter.put("/:id", async (req, res) => {
+  const { success, statusCode, body } = await userscontrollers.updateUser(
+    req.params.id,
+    req.body
+  );
+
+  res.status(statusCode).json({ success, statusCode, body });
+});
 export default usersRouter;

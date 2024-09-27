@@ -36,11 +36,27 @@ export default class UsersController {
   //deleta usuário por id
   async deleteUserById(userId) {
     try {
+      //verifica se o usuário existe antes de deletar
       const userExist = await this.dataAccess.getUserById(userId);
       if (!userExist) {
         return userNotExist();
       }
       const result = await this.dataAccess.deleteUserById(userId);
+
+      return ok(result);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
+
+  //atualiza usuário por id
+  async updateUser(userId, update) {
+    try {
+      const userExist = await this.dataAccess.getUserById(userId);
+      if (!userExist) {
+        return userNotExist();
+      }
+      const result = await this.dataAccess.updateUser(userId, update);
 
       return ok(result);
     } catch (error) {

@@ -14,6 +14,14 @@ export const userNotExist = () => {
   };
 };
 
+export const dadosIncompletos = () => {
+  return {
+    success: false,
+    statusCode: 400,
+    body: "Dados incompletos, confira os campos e tente novamente",
+  };
+};
+
 export const notFound = () => {
   return {
     success: false,
