@@ -38,9 +38,35 @@ export const serverError = (error) => {
   };
 };
 
+export const plateNotExist = () => {
+  return {
+    success: false,
+    statusCode: 400,
+    body: "plate already deleted or does not exist",
+  };
+};
+export const plateAlreadyExist = () => {
+  return {
+    success: false,
+    statusCode: 400,
+    body: "plate already exist",
+  };
+};
+export const plateCreated = () => {
+  return {
+    success: true,
+    statusCode: 201,
+    body: "plate created",
+  };
+};
+
 export default {
   ok,
   notFound,
   serverError,
   userNotExist,
+  dadosIncompletos,
+  plateNotExist,
+  plateAlreadyExist,
+  plateCreated,
 };
