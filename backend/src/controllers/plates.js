@@ -1,13 +1,9 @@
 import PlatesDataAccess from "../dataAccess/plates.js";
 import {
-  dadosIncompletos,
-  notFound,
   ok,
-  plateAlreadyExist,
   plateCreated,
   plateNotExist,
   serverError,
-  userNotExist,
 } from "../helpers/httpResponse.js";
 
 export default class PlatesController {
@@ -15,9 +11,9 @@ export default class PlatesController {
     this.dataAccess = new PlatesDataAccess();
   }
 
-  async getPlates() {
+  async getAllPlates() {
     try {
-      const plates = await this.dataAccess.getPlates();
+      const plates = await this.dataAccess.getAllPlates();
       return ok(plates);
     } catch (error) {
       return serverError(error);
@@ -33,21 +29,21 @@ export default class PlatesController {
     }
   }
 
-  // //trás usuário por id
-  // async getPlateById(id) {
-  //   try {
-  //     const plateById = await this.dataAccess.getPlateById(id);
-  //     if (plateById) {
-  //       return ok(plateById);
-  //     }
-  //     return notFound();
-  //   } catch (error) {
-  //     return serverError(error);
-  //   }
-  // }
+  //tras prato por id
+  async getPlateById(plateId) {
+    try {
+      const plate = await this.dataAccess.getPlateById(plateId);
 
+      if (!plate) {
+        return plateNotExist();
+      }
+
+      return ok(plate);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
   //adicina um novo prato
-  //aqui primeiro verificamos se o prato já existe, para depois adicionar um novo prato
   async addPlate(plateData) {
     try {
       const result = await this.dataAccess.addPlate(plateData);
@@ -57,11 +53,11 @@ export default class PlatesController {
       return serverError(error);
     }
   }
-  
-  //deleta usuário por id
+
+  //deleta prato por id
   async deletePlateById(plateId) {
     try {
-      //verifica se o usuário existe antes de deletar
+      //verifica se o prato existe antes de deletar
       const result = await this.dataAccess.deletePlate(plateId);
 
       return ok(result);
@@ -70,7 +66,7 @@ export default class PlatesController {
     }
   }
 
-  //atualiza usuário por id
+  //atualiza prato por id
   async updatePlate(plateId, update) {
     try {
       const result = await this.dataAccess.updatePlate(plateId, update);

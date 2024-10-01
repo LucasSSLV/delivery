@@ -1,55 +1,46 @@
 import express from "express";
 import PlatesController from "../controllers/plates.js";
-import { dadosIncompletos } from "../helpers/httpResponse.js";
-const platesRouter = express.Router();
 
+const platesRouter = express.Router();
 const platesControllers = new PlatesController();
 
-//rota que trás a lista de prato do banco de dados
-platesRouter.get("/", async (req, res) => {
-  const { success, statusCode, body } =
-    await platesControllers.getAvailiablePlates();
 
-  res.status(statusCode).json({ success, statusCode, body });
-});
-
-//rota que trás um prato por id
+// 1. Rota específica que traz pratos disponíveis
 platesRouter.get("/availiable", async (req, res) => {
   const { success, statusCode, body } =
-    await platesControllers.getAvailiablePlates();
-
+  await platesControllers.getAvailiablePlates();
+  
+  res.status(statusCode).json({ success, statusCode, body });
+});
+// 2. Rota geral que traz a lista de pratos do banco de dados
+platesRouter.get("/", async (req, res) => {
+  const { success, statusCode, body } = await platesControllers.getAllPlates();
   res.status(statusCode).json({ success, statusCode, body });
 });
 
-//rota que deleta por id
-platesRouter.delete("/:id", async (req, res) => {
-  const { success, statusCode, body } = await platesControllers.deletePlateById(
-    req.params.id
+// 3. Rota que adiciona um novo prato
+platesRouter.post("/", async (req, res) => {
+  const { success, statusCode, body } = await platesControllers.addPlate(
+    req.body
   );
-
   res.status(statusCode).json({ success, statusCode, body });
 });
 
-//rota que atualiza por id
+// 4. Rota que atualiza um prato por ID
 platesRouter.put("/:id", async (req, res) => {
   const { success, statusCode, body } = await platesControllers.updatePlate(
     req.params.id,
     req.body
   );
-
   res.status(statusCode).json({ success, statusCode, body });
 });
 
-//rota que adiciona um novo prato
-platesRouter.post("/", async (req, res) => {
-  const { success, statusCode, body } = await platesControllers.addPlate(
-    req.body
+// 5. Rota que deleta um prato por ID
+platesRouter.delete("/:id", async (req, res) => {
+  const { success, statusCode, body } = await platesControllers.deletePlateById(
+    req.params.id
   );
-  
-  res.status(statusCode).json({
-    statusCode,
-    success,
-    body,
-  });
+  res.status(statusCode).json({ success, statusCode, body });
 });
+
 export default platesRouter;

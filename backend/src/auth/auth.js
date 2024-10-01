@@ -125,16 +125,20 @@ authRouter.post(
             });
 
             if (result.insertedId) {
-              const user = await mongo.db
-                .collection(collectionName)
-                .findOne({ _id: new ObjectId(result.insertedId) });
+              const user = await mongo.db.collection(collectionName).findOne(
+                { _id: new ObjectId(result.insertedId) },
+                {
+                  projection: {
+                    password: 0,
+                    salt: 0,
+                  },
+                }
+              );
 
               // Geração do token JWT
-              const token = jwt.sign(
-                { id: user._id, email: user.email },
-                process.env.JWT_SECRET,
-                { expiresIn: "1h" }
-              );
+              const token = jwt.sign(user, process.env.JWT_SECRET, {
+                expiresIn: "1h",
+              });
 
               return res.status(201).send({
                 success: true,

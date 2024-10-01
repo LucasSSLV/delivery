@@ -6,15 +6,17 @@ const collectionName = "plates";
 //tras a lista de pratos do banco de dados
 export default class PlatesDataAccess {
   // //tras a lista de pratos do banco de dados
-  async getPlates() {
+  async getAllPlates() {
     const result = await mongo.db.collection(collectionName).find({}).toArray();
 
     return result;
   }
 
-  //verifica se o prato existe
-  async getAvailiablePlates() {
-    const result = await mongo.db.collection(collectionName).find({}).toArray();
+  //tras pratos por id
+  async getPlateById(id) {
+    const result = await mongo.db
+      .collection(collectionName)
+      .findOne({ _id: new ObjectId(id) });
 
     return result;
   }
@@ -26,11 +28,11 @@ export default class PlatesDataAccess {
       .insertOne(plateData);
     return result;
   }
-  //trás prato por id
-  async getPlateById(id) {
+  //trás pratos disponiveis
+  async getAvailiablePlates() {
     const result = await mongo.db
       .collection(collectionName)
-      .findOne({ avaliable: true });
+      .findOne({ availiable: true });
 
     return result;
   }
