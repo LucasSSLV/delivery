@@ -38,4 +38,5 @@ usersRouter.put("/:id", async (req, res) => {
 
   res.status(statusCode).json({ success, statusCode, body });
 });
+
 export default usersRouter;

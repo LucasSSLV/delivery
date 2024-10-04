@@ -63,7 +63,7 @@ authRouter.post(
       });
     }
 
-    const { email, password, nome, sobrenome, dataDeNascimento } = req.body;
+    const { email, password } = req.body;
 
     try {
       // Verificação se o usuário já existe

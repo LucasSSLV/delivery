@@ -20,10 +20,8 @@ export default class OrdersController {
   async getOrdersByUserId(userId) {
     try {
       const ordersById = await this.dataAccess.getOrdersByUserId(userId);
-      console.log("Pedidos obtidos para userId", userId, ":", ordersById);
       return ok(ordersById);
     } catch (error) {
-      console.error("Erro ao obter pedidos por userId:", error);
       return serverError(error);
     }
   }
