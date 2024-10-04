@@ -12,13 +12,6 @@ orderRouter.delete("/:id", async (req, res) => {
 
   res.status(statusCode).json({ success, statusCode, body });
 });
-//rota que trás a lista de order do banco de dados
-orderRouter.get("/", async (req, res) => {
-  const { success, statusCode, body } = await ordersController.getOrders();
-
-  res.status(statusCode).json({ success, statusCode, body });
-});
-
 //rota que trás a lista de order por id do usuario
 orderRouter.get("/:id", async (req, res) => {
   const { success, statusCode, body } =
@@ -26,6 +19,13 @@ orderRouter.get("/:id", async (req, res) => {
 
   res.status(statusCode).json({ success, statusCode, body });
 });
+//rota que trás a lista de order do banco de dados
+orderRouter.get("/", async (req, res) => {
+  const { success, statusCode, body } = await ordersController.getOrders();
+
+  res.status(statusCode).json({ success, statusCode, body });
+});
+
 //rota que adiciona uma nova order
 
 orderRouter.post("/", async (req, res) => {

@@ -135,6 +135,61 @@ export default class OrdersDataAccess {
     }
   }
 
+  //pega uma order  por id
+  async getOrderById(orderId) {
+    const result = await mongo.db
+      .collection(collectionName)
+      .aggregate([
+        {
+          $match: { _id: new ObjectId(orderId) },
+        },
+        {
+          $lookup: {
+            from: "orderItems",
+            localField: "_id",
+            foreignField: "orderId",
+            as: "orderItems",
+          },
+        },
+        {
+          $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "_id",
+            as: "userDetails",
+          },
+        },
+        {
+          $project: {
+            "userDetails.password": 0,
+            "userDetails.salt": 0,
+          },
+        },
+        {
+          $unwind: "$orderItems",
+        },
+        {
+          $lookup: {
+            from: "plates",
+            localField: "orderItems.plateId",
+            foreignField: "_id",
+            as: "orderItems.itemDetails",
+          },
+        },
+        {
+          $group: {
+            _id: "$_id",
+            userDetails: { $first: "$userDetails" },
+            orderItems: { $push: "$orderItems" },
+            pickupStatus: { $first: "$pickupStatus" },
+            pickupTime: { $first: "$pickupTime" },
+          },
+        },
+      ])
+      .toArray();
+    return result;
+  }
+
   //adiciona um novo prato
   async addOrder(orderData) {
     const { itens, ...orderDataRest } = orderData;

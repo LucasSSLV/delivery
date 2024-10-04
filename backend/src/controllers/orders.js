@@ -23,7 +23,20 @@ export default class OrdersController {
       if (!ordersById) {
         return notFound();
       }
-      return ordersById;
+      return ok(ordersById);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
+
+  //retorna a lista de orders por id
+  async getOrderById(orderId) {
+    try {
+      const order = await this.dataAccess.getOrderById(orderId);
+      if (!order) {
+        return notFound();
+      }
+      return ok(order);
     } catch (error) {
       return serverError(error);
     }
