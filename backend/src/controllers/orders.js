@@ -20,7 +20,10 @@ export default class OrdersController {
   async getOrdersByUserId(userId) {
     try {
       const ordersById = await this.dataAccess.getOrdersByUserId(userId);
-      return ok(ordersById);
+      if (!ordersById) {
+        return notFound();
+      }
+      return ordersById;
     } catch (error) {
       return serverError(error);
     }

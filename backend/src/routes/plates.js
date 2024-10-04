@@ -18,6 +18,14 @@ platesRouter.get("/", async (req, res) => {
   res.status(statusCode).json({ success, statusCode, body });
 });
 
+//pega prato por id
+platesRouter.get("/:id", async (req, res) => {
+  const { success, statusCode, body } = await platesControllers.getPlateById(
+    req.params.id
+  );
+  res.status(statusCode).json({ success, statusCode, body });
+});
+
 // 3. Rota que adiciona um novo prato
 const allowedFields = [
   "name",
@@ -26,6 +34,7 @@ const allowedFields = [
   "description",
   "ingredients",
   "category",
+  "pickuTime",
 ];
 
 // 3. Rota que adiciona um novo prato
@@ -35,7 +44,9 @@ platesRouter.post(
     // Valida se os campos estão preenchidos
     body("name").notEmpty().withMessage("Campo 'name' é obrigatório"),
     body("price").notEmpty().withMessage("Campo 'price' é obrigatório"),
-    body("availiable").notEmpty().withMessage("Campo 'available' é obrigatório"), // Corrigido
+    body("availiable")
+      .notEmpty()
+      .withMessage("Campo 'available' é obrigatório"), // Corrigido
     body("description")
       .notEmpty()
       .withMessage("Campo 'description' é obrigatório"),
@@ -43,7 +54,9 @@ platesRouter.post(
       .notEmpty()
       .withMessage("Campo 'ingredients' é obrigatório"),
     body("category").notEmpty().withMessage("Campo 'category' é obrigatório"),
-
+    body("pickuTime")
+      .notEmpty()
+      .withMessage("Campo 'pickupTime' é obrigatório"),
     // Validação personalizada para impedir campos extras
     body().custom((body) => {
       const extraFields = Object.keys(body).filter(

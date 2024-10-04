@@ -88,15 +88,15 @@ export default class OrdersDataAccess {
               as: "userDetails",
             },
           },
-          {
-            $unwind: "$userDetails",
-          },
-          {
-            $project: {
-              "userDetails.password": 0,
-              "userDetails.salt": 0,
-            },
-          },
+          // {
+          //   $unwind: "$userDetails",
+          // },
+          // {
+          //   $project: {
+          //     "userDetails.password": 0,
+          //     "userDetails.salt": 0,
+          //   },
+          // },
           {
             $unwind: "$orderItems",
           },
