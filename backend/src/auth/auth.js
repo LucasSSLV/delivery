@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { ObjectId } from "mongodb";
 import { body, validationResult } from "express-validator";
 import { config } from "dotenv";
+import passport from "passport";
 
 config();
 const collectionName = "users";
@@ -17,13 +18,7 @@ const authRouter = express.Router();
 authRouter.use(express.json());
 
 // Lista de campos permitidos
-const allowedFields = [
-  "email",
-  "password",
-  "nome",
-  "sobrenome",
-  "dataDeNascimento",
-];
+const allowedFields = ["email", "password", "fullname"];
 
 // Rota de registro de usuário com validações usando express-validator
 authRouter.post(
@@ -34,14 +29,7 @@ authRouter.post(
     body("password")
       .isLength({ min: 6 })
       .withMessage("A senha deve ter pelo menos 6 caracteres."),
-    body("nome").notEmpty().withMessage("O campo 'nome' é obrigatório."),
-    body("sobrenome")
-      .notEmpty()
-      .withMessage("O campo 'sobrenome' é obrigatório."),
-    body("dataDeNascimento")
-      .isISO8601()
-      .toDate()
-      .withMessage("Data de nascimento inválida."),
+    body("fullname").notEmpty().withMessage("O campo 'nome' é obrigatório."),
 
     // Validação personalizada para impedir campos extras
     body().custom((body) => {
@@ -145,13 +133,7 @@ authRouter.post(
                 body: {
                   text: "Usuário registrado com sucesso!",
                   token,
-                  user: {
-                    id: user._id,
-                    email: user.email,
-                    nome: user.nome,
-                    sobrenome: user.sobrenome,
-                    dataDeNascimento: user.dataDeNascimento,
-                  },
+                  user,
                   logged: true,
                 },
               });
@@ -191,4 +173,41 @@ authRouter.post(
 
 // [Rota de login permanece a mesma]
 
+authRouter.post("/login", (req, res) => {
+  passport.authenticate("local", (error, user) => {
+    if (error || !user) {
+      return res.status(401).send({
+        success: false,
+        statusCode: 401,
+        body: {
+          text: "Falha na autenticação.",
+          error,
+        },
+      });
+    }
+
+    if (!user) {
+      return res.status(401).send({
+        success: false,
+        statusCode: 401,
+        body: {
+          text: "Usuário não encontrado.",
+        },
+      });
+    }
+
+    const token = jwt.sign(user, process.env.JWT_SECRET);
+
+    return res.status(200).send({
+      success: true,
+      statusCode: 200,
+      body: {
+        text: "Login realizado com sucesso.",
+        token,
+        user,
+        logged: true,
+      },
+    });
+  })(req, res);
+});
 export default authRouter;

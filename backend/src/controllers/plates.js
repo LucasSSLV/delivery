@@ -1,6 +1,7 @@
 import PlatesDataAccess from "../dataAccess/plates.js";
 import {
   ok,
+  plateAlreadyExist,
   plateCreated,
   plateNotExist,
   serverError,
@@ -46,6 +47,11 @@ export default class PlatesController {
   //adicina um novo prato
   async addPlate(plateData) {
     try {
+      const plate = await this.dataAccess.getAllPlates();
+
+      if (plate.some((p) => p.name === plateData.name)) {
+        return plateAlreadyExist();
+      }
       const result = await this.dataAccess.addPlate(plateData);
 
       return plateCreated(result);
