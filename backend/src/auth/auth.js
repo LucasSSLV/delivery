@@ -116,11 +116,10 @@ authRouter.post(
           try {
             // Inserção do novo usuário no banco de dados
             const result = await mongo.db.collection(collectionName).insertOne({
-              email,
+              email: req.body.email,
               password: hashedPassword,
-              nome,
-              sobrenome,
-              dataDeNascimento,
+              fullname: req.body.fullname,
+              // dataDeNascimento: req.body.dataDeNascimento,
               salt,
             });
 
