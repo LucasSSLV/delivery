@@ -1,12 +1,30 @@
 .navBarContainer {
-background: #a83512;
-    height: 96px;
-}
-
-.navbarItems{
-
+  display: flex;
+  align-items: center;
+  background: #12a874;
+  height: 96px;
 }
 
 .logo {
-    width: 5em;
+  width: 3.5em;
+}
+.navbarItems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.navbarLinksContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  padding-right: 0.5em;
+}
+
+.navBarLink {
+  color: #d7efe6;
 }

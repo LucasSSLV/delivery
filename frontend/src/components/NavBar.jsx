@@ -4,7 +4,7 @@ export default function NavBar() {
   return (
     <nav className={style.navBarContainer}>
       <div className={style.navbarItems}>
-        <img className={style.logo} src="../../public/logo.jpeg" alt="" />
+        <img className={style.logo} src="../../public/logo.png" alt="" />
         <div className={style.navbarLinksContainer}>
           <a className={style.navBarLink} href="/">
             Home
