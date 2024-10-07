@@ -1,9 +1,10 @@
 import "./App.css";
+import NavBar from "./components/navBar";
 
 function App() {
   return (
     <>
-      <h1 style={{ background: "red" }}>olá aqui vai ser meu frontend!</h1>
+      <NavBar />
     </>
   );
 }
