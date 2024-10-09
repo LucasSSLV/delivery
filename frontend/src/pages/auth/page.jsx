@@ -34,10 +34,11 @@ export default function Auth() {
         login(formData);
         break;
       case "signup":
-        signup(formData);
         if (formData.password !== formData.confirmPassword) {
           alert("senhas não são iguais");
+          return;
         }
+        signup(formData);
         break;
     }
   };
