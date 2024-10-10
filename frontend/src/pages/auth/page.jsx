@@ -42,76 +42,80 @@ export default function Auth() {
         break;
     }
   };
-
-  if (formType === "login") {
-    return (
-      //aqui tenho o formulário de login
-      <div className={styles.authContainer}>
-        <h1>Login</h1>
-        {/*aqui tenho o botão que chama a função handleFormType */}
-        <button onClick={handleFormType}>entrar</button>
-        <form onSubmit={handleSubmitForm}>
-          {/* aqui tenho os campos/entradas email e password*/}
-          <TextField
-            required
-            label="Email"
-            type="email"
-            name="email"
-            onChange={handleFormDataChange}
-          />
-          <TextField
-            required
-            label="Password"
-            type="password"
-            name="password"
-            onChange={handleFormDataChange}
-          />
-
-          {/* aqui o botão e tipo submit */}
-          <Button type="submit">Login</Button>
-        </form>
-      </div>
-    );
+  //aqui eu verifico se o authLoading é true
+  if (authLoading) {
+    return <div>Carregando...</div>;
   }
 
-  if (formType === "signup") {
-    return (
-      //aqui tenho o formulário de cadastro
-      <div className={styles.authContainer}>
-        <h1>Signup</h1>
-        <button onClick={handleFormType}>criar uma conta</button>
-        <form onSubmit={handleSubmitForm}>
-          <TextField
-            required
-            label="/Fullname"
-            type="text"
-            name="fullname"
-            onChange={handleFormDataChange}
-          />
-          <TextField
-            required
-            label="Email"
-            type="email"
-            name="email"
-            onChange={handleFormDataChange}
-          />
-          <TextField
-            required
-            label="Password"
-            type="password"
-            name="password"
-            onChange={handleFormDataChange}
-          />
-          <TextField
-            required
-            label="Confirm Password"
-            type="password"
-            name="confirmPassword"
-            onChange={handleFormDataChange}
-          />
-          <Button type="submit">Signup</Button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div className={styles.authContainer}>
+      {formType === "login" ? (
+        <>
+          {/* //aqui tenho o formulário de login */}
+          <h1>Login</h1>
+          {/*aqui tenho o botão que chama a função handleFormType */}
+          <button onClick={handleFormType}>entrar</button>
+          <form onSubmit={handleSubmitForm}>
+            {/* aqui tenho os campos/entradas email e password*/}
+            <TextField
+              required
+              label="Email"
+              type="email"
+              name="email"
+              onChange={handleFormDataChange}
+            />
+            <TextField
+              required
+              label="Password"
+              type="password"
+              name="password"
+              onChange={handleFormDataChange}
+            />
+
+            {/* aqui o botão e tipo submit */}
+            <Button type="submit">Login</Button>
+          </form>
+        </>
+      ) : null}
+
+      {formType === "signup" ? (
+        //aqui tenho o formulário de cadastro
+        <>
+          <h1>Signup</h1>
+          <button onClick={handleFormType}>criar uma conta</button>
+          <form onSubmit={handleSubmitForm}>
+            <TextField
+              required
+              label="/Fullname"
+              type="text"
+              name="fullname"
+              onChange={handleFormDataChange}
+            />
+            <TextField
+              required
+              label="Email"
+              type="email"
+              name="email"
+              onChange={handleFormDataChange}
+            />
+            <TextField
+              required
+              label="Password"
+              type="password"
+              name="password"
+              onChange={handleFormDataChange}
+            />
+            <TextField
+              required
+              label="Confirm Password"
+              type="password"
+              name="confirmPassword"
+              onChange={handleFormDataChange}
+            />
+            <Button type="submit">Signup</Button>
+          </form>
+        </>
+      ) : null}
+    </div>
+  );
 }
