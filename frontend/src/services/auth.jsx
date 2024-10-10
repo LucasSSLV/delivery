@@ -39,7 +39,11 @@ export default function authServices() {
         setAuthLoading(false);
       });
   };
-  const logout = () => {};
+
+  //aqui eu excecuto o logout
+  const logout = () => {
+    localStorage.removeItem("auth");
+  };
 
   //aqui tenho a função signup que recebe um formData e seta o estado de authLoading para true
   const signup = (formData) => {

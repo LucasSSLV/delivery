@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, TextField } from "@mui/material";
 import styles from "./page.module.css";
 import authServices from "../../services/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Auth() {
   const [formType, setFormType] = useState("login");
   const [formData, setFormData] = useState(null);
   const { login, signup, authLoading } = authServices();
+
+  const navigate = useNavigate();
+  const authData = JSON.parse(localStorage.getItem("auth"));
+
+  //aqui eu verifico se o authData é falso
+  useEffect(() => {
+    //aqui eu chamo a função navigator que redireciona para a página de autenticação
+    if (authData) {
+      //aqui eu chamo a função navigate que redireciona para a página de autenticação pois o authData é falso
+      return navigate("/profile");
+    }
+  }, [authData]);
 
   //aqui tenho a função handleFormType que muda o estado do formType
   const handleFormType = () => {
@@ -49,12 +62,12 @@ export default function Auth() {
 
   return (
     <div className={styles.authContainer}>
+      {/* //aqui eu verifico se o formType é igual a login */}
       {formType === "login" ? (
         <>
-          {/* //aqui tenho o formulário de login */}
           <h1>Login</h1>
           {/*aqui tenho o botão que chama a função handleFormType */}
-          <button onClick={handleFormType}>entrar</button>
+          <button onClick={handleFormType}>Registrar novo usuário</button>
           <form onSubmit={handleSubmitForm}>
             {/* aqui tenho os campos/entradas email e password*/}
             <TextField
@@ -82,7 +95,7 @@ export default function Auth() {
         //aqui tenho o formulário de cadastro
         <>
           <h1>Signup</h1>
-          <button onClick={handleFormType}>criar uma conta</button>
+          <button onClick={handleFormType}>Entrar</button>
           <form onSubmit={handleSubmitForm}>
             <TextField
               required
